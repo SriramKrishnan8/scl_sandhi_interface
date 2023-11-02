@@ -12,9 +12,8 @@ from tqdm import tqdm
 
 import devtrans as dt
 
-#from devconvert import dev2wx, dev2slp, iast2slp, slp2iast, slp2wx, slp2dev, wx2slp, slp2tex
-
 import sandhi_words as sw
+import transliteration as tl
 
 
 sandhi_modes = {
@@ -23,102 +22,18 @@ sandhi_modes = {
 }
 
 
-def dev2wx(text):
-    """
-    """
-    
-#    return slp2wx.convert(dev2slp.convert(text))
-    return dt.dev2wx(text)
-
-
-def wx2dev(text):
-    """
-    """
-    
-#    return slp2dev.convert(wx2slp.convert(text))
-    return dt.wx2dev(text)
-    
-
-def iast2wx(text):
-    """
-    """
-    
-#    return slp2wx.convert(iast2slp.convert(text))
-    return dt.iast2wx(text)
-    
-
-def wx2iast(text):
-    """
-    """
-    
-#    return slp2iast.convert(wx2slp.convert(text))
-    return dt.wx2iast(text)
-
-
-def input_transliteration(input_text, input_enc):
-    """ Converts input in any given notation to WX  
-    """
-    
-    trans_input = ""
-    trans_enc = ""
-    
-    if input_enc == "DN":
-        trans_input = dev2wx(input_text)
-        trans_enc = "WX"
-    elif input_enc == "RN":
-        trans_input = iast2wx(input_text)
-        trans_enc = "WX"
-    else:
-        trans_input = input_text
-        trans_enc = input_enc
-    
-    # The following condition makes sure that the other chandrabindu
-    # which comes on top of other characters is replaced with m
-    if "z" in trans_input:
-        if trans_input[-1] == "z":
-            trans_input = trans_input.replace("z", "m")
-        else:
-            trans_input = trans_input.replace("z", "M")
-    
-    return (trans_input, trans_enc)
-
-
-def output_transliteration(output_text, output_enc):
-    """ Converts the output which is always in WX to 
-        deva or roma
-    """
-    
-    trans_output = ""
-    trans_enc = ""
-    
-    if output_enc == "deva":
-        trans_out = wx2dev(output_text)
-        num_map = str.maketrans('०१२३४५६७८९', '0123456789')
-        trans_output = trans_out.translate(num_map)
-        trans_enc = "deva"
-    elif output_enc == "roma":
-        trans_output = wx2iast(output_text)
-        trans_enc = "roma"
-    else:
-        trans_output = output_text
-        trans_enc = output_enc
-    
-    return (trans_output, trans_enc)
-
-
-
 def run_sandhi(input_first, input_second, input_encoding,
                 output_encoding="roma", sandhi_mode="e"):
     """ """
     
-    first_word = input_transliteration(input_first.strip(), input_encoding)[0]
-    second_word = input_transliteration(input_second.strip(), input_encoding)[0]
+    first_word = tl.input_transliteration(input_first.strip(), input_encoding)[0]
+    second_word = tl.input_transliteration(input_second.strip(), input_encoding)[0]
     
     internal = True if sandhi_mode == "i" else False
     
     sandhied_word = sw.sandhi_join(first_word, second_word, internal)
     
-    sandhi_word_out = output_transliteration(sandhied_word, output_encoding)[0]
+    sandhi_word_out = tl.output_transliteration(sandhied_word, output_encoding)[0]
 
     return sandhi_word_out
 

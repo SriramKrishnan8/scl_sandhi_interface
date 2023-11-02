@@ -59,7 +59,7 @@ def get_sandhied_form(first, second, natva_needed = True):
 
         p = sp.Popen(['perl', 'sandhi/sandhi.pl', first, second], stdout=sp.PIPE)
         result = (p.communicate()[0]).decode('utf-8')
-
+        
         result_string = re.search(r':?(.*?),', result).group(1)
         result_list = result_string.split(':')
         return result_list
