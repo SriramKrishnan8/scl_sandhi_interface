@@ -12,7 +12,7 @@ from tqdm import tqdm
 
 import devtrans as dt
 
-import sandhi_words as sw
+from sandhi import sandhi_words as sw
 import transliteration as tl
 
 
