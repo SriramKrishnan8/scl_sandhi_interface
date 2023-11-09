@@ -57,7 +57,7 @@ def get_sandhied_form(first, second, natva_needed = True):
         if natva_needed:
             (first, second) = natva(first, second)
 
-        p = sp.Popen(['perl', 'sandhi/sandhi.pl', first, second], stdout=sp.PIPE)
+        p = sp.Popen(['perl', 'sandhi.pl', first, second], stdout=sp.PIPE)
         result = (p.communicate()[0]).decode('utf-8')
         
         result_string = re.search(r':?(.*?),', result).group(1)
