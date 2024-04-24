@@ -2,11 +2,12 @@
 
 An interface for [Samsaadhanii's]((www.sanskrit.uohyd.ac.in/scl)) Sandhi tool is built here. The following are the constituents:
 
-1. sandhi/ &rarr; contains morph binary file and sandhi joining perl files from Samsaadhanii
-2. sandhi\_joiner.py &rarr; accepts two strings or input file and output file and returns the sandhied forms accordingly
-3. sandhi\_words.py &rarr; interface for Samsaadhanii's sandhi tool
-4. run\_sandhi.sh &rarr; examples to run
-5. input.tsv &rarr; input file - tab-delimited words to be sandhied
+1. sandhi.pl, any_sandhi.pl, apavAxa\_any.pl &rarr; sandhi joining perl files from Samsaadhanii
+2. all_morf.bin &rarr; morph binary file from Samsaadhanii
+3. sandhi\_joiner.py &rarr; accepts two strings or input file and output file and returns the sandhied forms accordingly
+4. sandhi\_words.py &rarr; interface for Samsaadhanii's sandhi tool
+5. run\_sandhi.sh &rarr; examples to run
+6. input.tsv &rarr; input file - tab-delimited words to be sandhied
 
 ## Pre-requisites
 
@@ -18,7 +19,13 @@ An interface for [Samsaadhanii's]((www.sanskrit.uohyd.ac.in/scl)) Sandhi tool is
 
 ## Instructions
 
-To run sandhi_joiner.py:
+To run sandhi_joiner.py (for a single instance):
+
+```
+python3 sandhi_joiner.py WX deva ext -f "lakRmIvAn" -s "SuBalakRaNaH"
+```
+
+To run sandhi_joiner.py (for a multiple instances from an input file):
 
 ```
 python3 sandhi_joiner.py DN deva ext -i input.tsv -o output.tsv
