@@ -1,12 +1,13 @@
 import subprocess as sp
 import re
 
+import sandhi as sn
+
 svaras = "aAiIuUqQLeEoO"
 natva_permissing_letters = svaras + "MkKgGfpPbBmyrvRh"
 #natva_permissing_letters = "aAiIuUqQLeEoOMkKgGfpPbBmyrvRh"
 natva_inhibiting_letters = "cCjJFtTdDNwWxXnlsS"
 
-second_solution_pairs_iast = [('t', 'h'), ('ḥ', 's'), ('k', 'h'), ('ṭ', 's')]
 second_solution_pairs_wx = [('w', 'h'), ('H', 's'), ('k', 'h'), ('t', 's')]
 
 list_of_preverbs = [
@@ -14,6 +15,7 @@ list_of_preverbs = [
     "pra", "prawi", "sam", "su", "upa", "ux", "vi", "xus", "parA", "ku",
     "niH", "nir", "saw", "asaw", "apa", "Afa", "Af", "UrI", "xur"
 ]
+
 
 def natva_inhibited(aft_r):
     index_n = aft_r.find("n")
@@ -27,6 +29,7 @@ def natva_inhibited(aft_r):
     status = True if (True in bef_n_status) else False
     return (status, index_n)
 
+
 def natva_status(first, second, letter):
     if (letter in first):
         index_r = first.rfind(letter)
@@ -39,6 +42,7 @@ def natva_status(first, second, letter):
             if not status:
                 second = second[:index] + "N" + second[(index + 1):]
     return (first, second)
+
     
 def natva(first, second):
     (first, second) = natva_status(first, second, "r")
@@ -47,6 +51,7 @@ def natva(first, second):
     (first, second) = natva_status(first, second, "Q")
     (first, second) = natva_status(first, second, "L")
     return (first, second)
+
 
 def get_sandhied_form(first, second, natva_needed = True):
     if ((not (first == "")) and (not (second == ""))):
@@ -57,8 +62,13 @@ def get_sandhied_form(first, second, natva_needed = True):
         if natva_needed:
             (first, second) = natva(first, second)
 
-        p = sp.Popen(['perl', 'sandhi.pl', first, second], stdout=sp.PIPE)
-        result = (p.communicate()[0]).decode('utf-8')
+        # To access the old perl program for performing the sandhi operation
+        # Uncomment the import statement at the top to import the sandhi module
+#        p = sp.Popen(['perl', 'sandhi.pl', first, second], stdout=sp.PIPE)
+#        result = (p.communicate()[0]).decode('utf-8')
+        
+        # To access the new python implementation of the sandhi operation
+        result = sn.sandhi_operation(first, second)
         
         result_string = re.search(r':?(.*?),', result).group(1)
         result_list = result_string.split(':')
@@ -70,11 +80,12 @@ def get_sandhied_form(first, second, natva_needed = True):
             return [first]
         else:
             return []
+
             
 def sandhi_join(first, second, internal):
     internal = True if ((not internal) and (first in list_of_preverbs)) else internal
     sandhied_word_list = get_sandhied_form(first, second, internal)
-
+        
     if (len(sandhied_word_list) == 0):
         return (first + second)
     else:
