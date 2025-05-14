@@ -339,7 +339,7 @@ def check_rules(first, second):
         sandhi_name = "pararUpa"
         sutra = "efi pararUpam (6.1.94)"
         cont = 0
-    if first[-3] in ["a", "A", "o", "u"] and first.endswith("pa") and second[0] in ["e", "o"]:
+    if first.endswith("pa") and len(first) >= 3 and first[-3] in ["a", "A", "o", "u"] and second[0] in ["e", "o"]:
         res = first[:-2] + "p" + second
         sandhi_name = "pararUpa"
         sutra = "efi pararUpam (6.1.94)"
@@ -642,12 +642,12 @@ def check_rules(first, second):
         sandhi_name = "rePa"
         sutra = "roZsupi (8.2.69)"
         cont = 0
-    elif first[-2] in ["a", "A", "i", "u", "q"] and first[-1] in ["f", "N", "n"] and second[0] in vowels:
+    elif len(first) >= 2 and first[-2] in ["a", "A", "i", "u", "q"] and first[-1] in ["f", "N", "n"] and second[0] in vowels:
         res = first + first[-1] + second
         sandhi_name = "famudAgama"
         sutra = "famo hrasvAxaci famuNniwyam (8.3.32)"
         cont = 0
-    elif first[-2] not in ["a", "A", "i", "u", "q"] and first[-1] in ["f", "N", "n"] and second[0] in vowels:
+    elif len(first) >= 2 and first[-2] not in ["a", "A", "i", "u", "q"] and first[-1] in ["f", "N", "n"] and second[0] in vowels:
         res = first + second
         sandhi_name = "diPAlta"
         sutra = ""
@@ -655,7 +655,7 @@ def check_rules(first, second):
     else:
         pass
 
-    if first[-2] in ["i", "I", "u", "U", "q", "Q", "L", "e", "E", "o", "O"] and first[1] == "H" and second[0] in (vowels + ["g", "G", "f", "j", "J", "F", "d", "D", "N", "x", "X", "n", "b", "B", "m", "y", "l", "v", "h"]):
+    if len(first) >= 2 and first[-2] in ["i", "I", "u", "U", "q", "Q", "L", "e", "E", "o", "O"] and first[1] == "H" and second[0] in (vowels + ["g", "G", "f", "j", "J", "F", "d", "D", "N", "x", "X", "n", "b", "B", "m", "y", "l", "v", "h"]):
         res = first[:-1] + "r" + second
         sandhi_name = "rePa"
         sutra = "sasajuRo ruH (8.2.66)"
@@ -676,7 +676,7 @@ def check_rules(first, second):
         sandhi_name = "ruwva-> uwva-> guNa"
         sutra = "sasajuRo ruH (8.2.66)-> haSi ca (6.1.114)-> Ax guNaH (6.1.87)"
         cont = 0
-    elif first[-2] in vowels and first[-1] == "H" and second[0] in ["w", "W"] and not second[1] in ["s", "S", "R"]:
+    elif len(first) >= 2 and first[-2] in vowels and first[-1] == "H" and second[0] in ["w", "W"] and not second[1] in ["s", "S", "R"]:
         res = first[:-1] + "s" + second
         sandhi_name = "sawva"
         sutra = "visarjanIyasya saH (8.3.34)"
@@ -684,12 +684,12 @@ def check_rules(first, second):
     else:
         pass
 
-    if first[-2] in vowels and first[-1] == "H" and second[0] in ["c", "C"]:
+    if len(first) >= 2 and first[-2] in vowels and first[-1] == "H" and second[0] in ["c", "C"]:
         res = first[:-1] + "S" + second
         sandhi_name = "sawva-> Scuwva"
         sutra = "visarjanIyasya saH (8.3.34)-> swoH ScunA ScuH (8.4.40)"
         cont = 0
-    if first[-2] in vowels and first[-1] == "H" and second[0] in ["t", "T"]:
+    if len(first) >= 2 and first[-2] in vowels and first[-1] == "H" and second[0] in ["t", "T"]:
         res = first[:-1] + "R" + second
         sandhi_name = "sawva-> Rtuwva"
         sutra = "visarjanIyasya saH (8.3.34)-> RtunA RtuH (8.4.41)"

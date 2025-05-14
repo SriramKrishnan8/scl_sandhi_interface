@@ -1,7 +1,11 @@
 import subprocess as sp
 import re
 
-import sandhi as sn
+#from . import sandhi as sn
+
+import sandhi
+
+s = sandhi.Sandhi()
 
 svaras = "aAiIuUqQLeEoO"
 natva_permissing_letters = svaras + "MkKgGfpPbBmyrvRh"
@@ -68,10 +72,13 @@ def get_sandhied_form(first, second, natva_needed = True):
 #        result = (p.communicate()[0]).decode('utf-8')
         
         # To access the new python implementation of the sandhi operation
-        result = sn.sandhi_operation(first, second)
+#        result = sn.sandhi_operation(first, second)
+#        
+#        result_string = re.search(r':?(.*?),', result).group(1)
+#        result_list = result_string.split(':')
         
-        result_string = re.search(r':?(.*?),', result).group(1)
-        result_list = result_string.split(':')
+        result_list = [ item[0] for item in s.sandhi(first, second) ]
+        
         return result_list
     else:
         if (first == ""):
@@ -99,6 +106,9 @@ def sandhi_join(first, second, internal):
         
         sandhied_word = sandhied_word.replace("><", "H")
         sandhied_word = sandhied_word.replace("  ", " ")
+        
+        if internal:
+            sandhied_word = sandhied_word.replace(" ", "")
         
         return sandhied_word.strip()
     

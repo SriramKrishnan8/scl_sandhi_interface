@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-import rules
-import exceptions as ex
+from . import rules
+from . import exceptions as ex
 
 #$DEBUG=1;
 pra = "praWamapaxam"
