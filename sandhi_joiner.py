@@ -12,8 +12,10 @@ from tqdm import tqdm
 
 import devtrans as dt
 
-import sandhi_words as sw
-import transliteration as tl
+
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+from sandhi_words import sandhi_join
+from transliteration import *
 
 
 sandhi_modes = {
@@ -22,18 +24,24 @@ sandhi_modes = {
 }
 
 
+def run_sandhi_join(first_word, second_word, internal):
+    """ """
+    
+    return sandhi_join(first_word, second_word, internal)
+
+
 def run_sandhi(input_first, input_second, input_encoding,
                 output_encoding="roma", sandhi_mode="e"):
     """ """
     
-    first_word = tl.input_transliteration(input_first.strip(), input_encoding)[0]
-    second_word = tl.input_transliteration(input_second.strip(), input_encoding)[0]
+    first_word = input_transliteration(input_first.strip(), input_encoding)[0]
+    second_word = input_transliteration(input_second.strip(), input_encoding)[0]
     
     internal = True if sandhi_mode == "i" else False
     
-    sandhied_word = sw.sandhi_join(first_word, second_word, internal)
+    sandhied_word = run_sandhi_join(first_word, second_word, internal)
     
-    sandhi_word_out = tl.output_transliteration(sandhied_word, output_encoding)[0]
+    sandhi_word_out = output_transliteration(sandhied_word, output_encoding)[0]
 
     return sandhi_word_out
 

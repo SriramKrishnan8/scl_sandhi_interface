@@ -1,7 +1,10 @@
+import os, sys
+
 import subprocess as sp
 import re
 
-#from . import sandhi as sn
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+from scl_sandhi import sandhi_operation
 
 import sandhi
 
@@ -72,12 +75,13 @@ def get_sandhied_form(first, second, natva_needed = True):
 #        result = (p.communicate()[0]).decode('utf-8')
         
         # To access the new python implementation of the sandhi operation
-#        result = sn.sandhi_operation(first, second)
+        result = sandhi_operation(first, second)
 #        
-#        result_string = re.search(r':?(.*?),', result).group(1)
-#        result_list = result_string.split(':')
-        
-        result_list = [ item[0] for item in s.sandhi(first, second) ]
+        result_string = re.search(r':?(.*?),', result).group(1)
+        result_list = result_string.split(':')
+
+        # The following is Hrishikesh's sandhi package from pip  
+#        result_list = [ item[0] for item in s.sandhi(first, second) ]
         
         return result_list
     else:

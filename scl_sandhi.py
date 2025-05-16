@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from . import rules
-from . import exceptions as ex
+from rules import rules_dict, rules_list
+from exceptions import exception_rules
 
 #$DEBUG=1;
 pra = "praWamapaxam"
@@ -40,7 +40,7 @@ def sandhi_operation(first, second):
     i = []
     res_list = []
     
-    res, sandhi_name, sutra, cont = ex.exception_rules(
+    res, sandhi_name, sutra, cont = exception_rules(
         first, second, morph_binary_file
     )
 
@@ -61,15 +61,15 @@ def sandhi_operation(first, second):
         search_str_1 = lf1 + "," + sf
         search_str_2 = lf2 + "," + sf
 
-        if search_str_1 in rules.rules_dict:
+        if search_str_1 in rules_dict:
             res, sandhi_name, sutra = get_results(
-                search_str_1, rules.rules_list,
+                search_str_1, rules_list,
                 first_rem_1, second_rem,
                 res, sandhi_name, sutra
             )
-        elif search_str_2 in rules.rules_dict:
+        elif search_str_2 in rules_dict:
             res, sandhi_name, sutra = get_results(
-                search_str_2, rules.rules_list,
+                search_str_2, rules_list,
                 first_rem_2, second_rem,
                 res, sandhi_name, sutra
             )
