@@ -24,12 +24,6 @@ sandhi_modes = {
 }
 
 
-def run_sandhi_join(first_word, second_word, internal):
-    """ """
-    
-    return sandhi_join(first_word, second_word, internal)
-
-
 def run_sandhi(input_first, input_second, input_encoding,
                 output_encoding="roma", sandhi_mode="e"):
     """ """
@@ -39,7 +33,7 @@ def run_sandhi(input_first, input_second, input_encoding,
     
     internal = True if sandhi_mode == "i" else False
     
-    sandhied_word = run_sandhi_join(first_word, second_word, internal)
+    sandhied_word = sandhi_join(first_word, second_word, internal)
     
     sandhi_word_out = output_transliteration(sandhied_word, output_encoding)[0]
 
@@ -53,7 +47,7 @@ def run_file_contents(input_file, output_file, input_encoding,
     try:
         ifile = open(input_file, 'r', encoding='utf-8')
     except OSError as e:
-        print(f"Unable to open {path}: {e}", file=sys.stderr)
+        print(f"Unable to open {input_file}: {e}", file=sys.stderr)
         sys.exit(1)
         
     input_text = ifile.read()
@@ -148,7 +142,7 @@ def main():
         res = run_sandhi(args.input_first, args.input_second, input_enc,
             output_encoding=output_enc, sandhi_mode=sandhi_mode)
         if args.output_file:
-            with open(args.output_file.name, 'w', encoding='utf-8') as o_file:
+            with open(args.output_file.name, 'w', encoding='utf-8') as out_file:
                 out_file.write(res)
         else:
             print(res)
